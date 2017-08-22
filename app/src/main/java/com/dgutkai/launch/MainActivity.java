@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
@@ -58,6 +59,21 @@ public class MainActivity extends BaseActivity {
             widgetcontrol.completeAddAppWidget(Integer.parseInt(widgetID), fl);
         }
 
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String packageName = appData.get(i).getId();
+                String name = appData.get(i).getName();
+                String number = appData.get(i).getNumber();
+                String sortkey = appData.get(i).getSortKey();
+                if ("null".equals(number) && "null".equals(sortkey)){
+                    Intent resolveIntent = getPackageManager().getLaunchIntentForPackage(packageName);// 这里的packname就是从上面得到的目标apk的包名
+                    // 启动目标应用
+                    startActivity(resolveIntent);
+                }
+
+            }
+        });
     }
 
     private void initData(){
