@@ -10,7 +10,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -91,17 +94,18 @@ public class ContactsInfo {
                 Long.parseLong(getId()));
         InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
         Bitmap photo = BitmapFactory.decodeStream(input);
+
         if (photo == null){
             Bitmap nameBitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(nameBitmap);
             Paint paint = new Paint();
 
-            int r = (int) Math.round(Math.random() * 100);
-            int g = (int) Math.round(Math.random() * 100);
-            int b = (int) Math.round(Math.random() * 100);
+            int r = (int) Math.round(Math.random() * 256);
+            int g = (int) Math.round(Math.random() * 256);
+            int b = (int) Math.round(Math.random() * 256);
             paint.setARGB(255, r, g, b);
             Paint textpaint = new Paint();
-            textpaint.setColor(0xffffffff);
+            textpaint.setARGB(255, 255-r, 255-g, 255-b);
             textpaint.setTextSize(63);
             textpaint.setTextAlign(Paint.Align.CENTER);
             canvas.drawArc(0, 0, 100, 100, 0, 360, true, paint);
@@ -116,7 +120,7 @@ public class ContactsInfo {
 
             return nameBitmap;
         }
-        return photo;
+        return makeRoundCorner(photo);
     }
 
     public boolean isSelected() {
@@ -143,4 +147,36 @@ public class ContactsInfo {
 
     }
 
+    public static Bitmap makeRoundCorner(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int left = 0, top = 0, right = width, bottom = height;
+        float roundPx = height/2;
+        if (width > height) {
+            left = (width - height)/2;
+            top = 0;
+            right = left + height;
+            bottom = height;
+        } else if (height > width) {
+            left = 0;
+            top = (height - width)/2;
+            right = width;
+            bottom = top + width;
+            roundPx = width/2;
+        }
+
+        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        int color = 0xff424242;
+        Paint paint = new Paint();
+        Rect rect = new Rect(left, top, right, bottom);
+        RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
 }

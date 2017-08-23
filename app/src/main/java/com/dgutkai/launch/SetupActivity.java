@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -49,6 +50,23 @@ public class SetupActivity extends BaseActivity {
 //        mAdapter = new SimpleAdapter(this, appData, R.layout.item_applist,
 //                new String[]{"icon", "name"}, new int[]{R.id.item_icon, R.id.app_name});
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final int index = i;
+                final AlertDialog alertDialog = new AlertDialog.Builder(SetupActivity.this).setTitle("删除")
+                        .setMessage("确认删除该联系人")
+                        .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dbUtil.deleteContacts(appData.get(index));
+                                initData();
+                            }
+                        })
+                        .setNegativeButton("取消", null).create();
+                alertDialog.show();
+            }
+        });
     }
 
     private void initData(){

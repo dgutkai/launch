@@ -48,6 +48,22 @@ public class DatabaseUtil {
 		}
 	}
 
+	public boolean deleteContacts(ContactsInfo contactsInfo){
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		String sql = "delete from " + MyHelper.TABLE_CONTACTS
+				+ " where id = ?";
+		try {
+			db.execSQL(sql, new String[]{contactsInfo.getId()});
+			return true;
+		} catch (SQLException e){
+			Log.e("err", "insert failed");
+			return false;
+		}finally{
+			db.close();
+		}
+	}
+
 	public ArrayList<ContactsInfo> getContacts(){
 		ArrayList<ContactsInfo> results = new ArrayList<ContactsInfo>();
 		SQLiteDatabase db = helper.getReadableDatabase();

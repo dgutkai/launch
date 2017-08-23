@@ -36,6 +36,12 @@ public class BaseActivity extends AppCompatActivity {
                     new String[]{android.Manifest.permission.READ_CONTACTS},
                     1);
         }
+        if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.CALL_PHONE},
+                    2);
+        }
     }
 
     @Override

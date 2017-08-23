@@ -100,6 +100,7 @@ public class APPWidgetControl {
 	    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	    lp.setMargins(0, 10, 10, 0);
 //	    FrameLayout mainLayout = (FrameLayout)this.findViewById(R.id.framelayout1);
+		framelayout.removeAllViews();
 	    framelayout.addView(mHostView, lp);                  
 	    framelayout.requestLayout();  
 	    return 0;
