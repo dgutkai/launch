@@ -54,7 +54,7 @@ public class APPWidgetControl {
 	    } else {
 	        AppWidgetProviderInfo appWidget = mAppWidgetManager.getAppWidgetInfo(appWidgetId);
 
-	        if (appWidget.configure != null) {
+	        if (appWidget != null && appWidget.configure != null) {
 	            // Launch over to configure widget, if needed
 	            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
 	            intent.setComponent(appWidget.configure);
