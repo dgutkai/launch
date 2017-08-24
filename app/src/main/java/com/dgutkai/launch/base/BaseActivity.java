@@ -1,5 +1,6 @@
 package com.dgutkai.launch.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -40,6 +41,12 @@ public class BaseActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.CALL_PHONE},
+                    2);
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CALL_LOG)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CALL_LOG},
                     2);
         }
     }

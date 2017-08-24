@@ -25,6 +25,7 @@ import java.util.Random;
 
 /**
  * Created by lin on 2017/8/21.
+ * 联系人模型类，这里将APP和联系人整合到该模型中。
  */
 
 public class ContactsInfo {
@@ -85,6 +86,11 @@ public class ContactsInfo {
         this.id = id;
     }
 
+    /**
+     * 返回ICON，若APP则直接返回APP图标，联系人若有图片的直接返回图片，否则绘画第一个字。
+     * @param context
+     * @return
+     */
     public Bitmap getIcon(Context context){
         if (icon != null){
             return icon;
