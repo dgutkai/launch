@@ -13,5 +13,5 @@
 ![image](https://github.com/dgutkai/launch/blob/master/ScreenShot/Screenshot_1503567344.png)</br>
 ![image](https://github.com/dgutkai/launch/blob/master/ScreenShot/Screenshot_1503567351.png)</br>
 ## APK安卓试用
-手机访问https://fir.im/kf9h或者扫描下面的二维码进行安装。</br>
+手机访问https://fir.im/kf9h 或者扫描下面的二维码进行安装。</br>
 ![image](https://github.com/dgutkai/launch/blob/master/ScreenShot/二维码.png)</br>
